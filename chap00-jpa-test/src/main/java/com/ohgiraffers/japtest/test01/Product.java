@@ -1,9 +1,6 @@
 package com.ohgiraffers.japtest.test01;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "tbl_product")
@@ -11,6 +8,7 @@ public class Product {
 
     @Id
     @Column(name = "product_code")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productCode;
 
     @Column(name = "product_name")

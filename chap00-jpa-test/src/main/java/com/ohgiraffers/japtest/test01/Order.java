@@ -1,5 +1,8 @@
 package com.ohgiraffers.japtest.test01;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,7 +18,7 @@ public class Order {
     @Column(name ="member_code")
     private int memberCode;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     private List<OrderMapping> orderMapping;
 
 

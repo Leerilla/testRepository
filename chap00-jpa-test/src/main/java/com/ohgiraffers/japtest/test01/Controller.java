@@ -53,20 +53,33 @@ public class Controller {
 
     @GetMapping("/orderList")
     public void orlist(){
-        Order order = new Order();
-        order.setMembercode(1);
+        Product product = productRepo.findById(1);
+        Member member = memberRepository.findById(1);
 
-        List<OrderMapping> orderMapping = new ArrayList<>();
-        orderMapping.add(new OrderMapping(new OrMppingPk(1,2)));
-        orderMapping.add(new OrderMapping(new OrMppingPk(1,2)));
-        orderMapping.add(new OrderMapping(new OrMppingPk(1,2)));
-        orderMapping.add(new OrderMapping(new OrMppingPk(1,2)));
-        orderMapping.add(new OrderMapping(new OrMppingPk(1,2)));
-        orderMapping.add(new OrderMapping(new OrMppingPk(1,2)));
+        // 주문 등록
+        Order newOrder = new Order();
+        newOrder.setMemberCode(member.getMemberCode());
 
-        order.setOrderMapping(orderMapping);
+        // 주문 리스트 추가
+        OrderMapping orderMapping = new OrderMapping();
+        orderMapping.setOrderMapping(new OrMppingPk(newOrder.getOrderCode(), product.getProductCode()));
+        orderMapping.setOrder(newOrder);
+        orderMapping.setProduct(product);
 
-        orderRepository.save(order);
+        List<OrderMapping> orderMappingList = new ArrayList<>();
+        orderMappingList.add(orderMapping);
+
+        newOrder.setOrderMapping(orderMappingList);
+
+        orderRepository.save(newOrder);
+    }
+
+    @GetMapping("/product")
+    public void insert(){
+        Product product = new Product();
+        product.setProductName("메카월드");
+        productRepo.save(product);
+
     }
 
     @GetMapping("/orderFind")
